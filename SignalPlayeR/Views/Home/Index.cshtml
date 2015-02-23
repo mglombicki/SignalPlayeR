@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "SignalPlayeR";
+}
+
+<link href="~/Content/player.css" rel="stylesheet" />
+<div class="container body-content">
+    <p></p>
+    <div id="playlist">
+        <div class="player">
+            <object type="application/x-shockwave-flash" data="http://grooveshark.com/songWidget.swf" width="100%" height="40">
+                <param name="wmode" value="window" />
+                <param name="allowScriptAccess" value="always" />
+                <param name="flashvars" value="hostname=grooveshark.com&p=0" />
+            </object>
+        </div>
+    </div>
+    <ul id="songlist" class="list-group"></ul>
+</div>
+
+<div class="footer">
+    <div class="container">
+        <form role="form">
+            <div class="form-group">
+                <input type="search" class="form-control song-search" id="search" placeholder="Add a song" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Registration Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Who are you?</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="register-field" placeholder="Username" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="register-button" data-dismiss="modal">Join</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                Created with SignalR, GrooveShark, and Echo Nest
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.0.3.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/PlayeR.js"></script>
+}
