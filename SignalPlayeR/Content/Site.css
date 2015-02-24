@@ -45,3 +45,9 @@ input[type="checkbox"].input-validation-error {
     line-height: 20px;
     padding: 15px;
 }
+
+body.modal-open,
+.modal-open .navbar-fixed-top,
+.modal-open .navbar-fixed-bottom{
+    margin: 0;
+}
