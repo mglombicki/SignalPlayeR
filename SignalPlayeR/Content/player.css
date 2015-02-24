@@ -34,9 +34,8 @@ i.fa {
     background-color: #222;
 }
 
-.warning {
-    color: #796c23;
-    background-color: #ffee8f;
+.unknown {
+    color: #666;
 }
 
 #songlist {

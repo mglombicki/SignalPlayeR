@@ -6,6 +6,7 @@ $(function () {
     var currentSong;
     var username;
     var $muteIcon = $("#mute-button");
+    var IMAGE_CDN_PATH = "http://images.gs-cdn.net/static/albums/40_";
 
     var muteSetting = JSON.parse(localStorage.getItem('mute'));
     if (muteSetting) {
@@ -77,6 +78,10 @@ $(function () {
     });
 
     var formatTime = function (seconds) {
+        if (seconds < 0) {
+            return "?";
+        }
+
         var min = parseInt(seconds / 60);
         var sec = zeroFill(parseInt(seconds % 60), 2);
         return min + ":" + sec;
@@ -110,10 +115,11 @@ $(function () {
     hub.client.addSong = function (songData) {
         var $li = $('<li class="list-group-item">');
         var $albumArt = $('<img class="album-art" />');
-        $albumArt.attr("src", "http://images.gs-cdn.net/static/albums/40_" + songData.AlbumID + ".jpg");
-        var additionalClass = "warning";
-        if (songData.Duration > 0) {
-            additionalClass = "";
+        var additionalClass = "";
+
+        $albumArt.attr("src", IMAGE_CDN_PATH + songData.AlbumID + ".jpg");
+        if (songData.Duration < 0) {
+            additionalClass = "unknown";
         }
         var $duration = $('<span class="duration badge ' + additionalClass + '">Error!</span>');
         $duration.text(formatTime(songData.Duration));
