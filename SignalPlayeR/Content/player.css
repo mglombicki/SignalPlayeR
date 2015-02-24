@@ -3,6 +3,10 @@
     color: #EEE;
 }
 
+i.fa {
+    cursor: pointer;
+}
+
 .list-group-item {
     background-color: #333;
     border: 1px solid #111;

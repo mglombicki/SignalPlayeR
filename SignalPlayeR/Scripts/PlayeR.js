@@ -5,12 +5,14 @@ $(function () {
     var muted = false;
     var currentSong;
     var username;
+    var $muteIcon = $("#mute-button");
 
     var muteSetting = JSON.parse(localStorage.getItem('mute'));
     if (muteSetting) {
         muted = muteSetting;
         if (muted) {
-            $("#mute-button").text("Unmute");
+            $muteIcon.removeClass("fa-stop");
+            $muteIcon.addClass("fa-play");
         }
     }
     var usernameSetting = JSON.parse(localStorage.getItem('user'));
@@ -22,17 +24,29 @@ $(function () {
     * UI Listeners
     */
 
-    $("#mute-button").click(function () {
+    $("#mute-button").click(function (e) {
+        e.preventDefault();
+
         muted = !muted;
+
+        // Save the mute state in the browser for the user
         localStorage.setItem("mute", JSON.stringify(muted));
-        $(".player").first().remove();//Get rid of the old Grooveshark player
+        // Get rid of the old Grooveshark player
+        $(".player").first().remove();
+
         if (muted) {
-            $("#playlist").append('<div class="player"><object type="application/x-shockwave-flash" data="http://grooveshark.com/songWidget.swf" width="100%" height="40"><param name="wmode" value="window" /><param name="allowScriptAccess" value="always" /><param name="flashvars" value="hostname=grooveshark.com&songID=' + currentSong.SongID + '&p=0" /></object></div>');
-            $(this).text("Unmute");
+            if (currentSong != null) {
+                $("#playlist").append('<div class="player"><object type="application/x-shockwave-flash" data="http://grooveshark.com/songWidget.swf" width="100%" height="40"><param name="wmode" value="window" /><param name="allowScriptAccess" value="always" /><param name="flashvars" value="hostname=grooveshark.com&songID=' + currentSong.SongID + '&p=0" /></object></div>');
+            }
+            $muteIcon.removeClass("fa-stop");
+            $muteIcon.addClass("fa-play");
         }
         else {
-            $("#playlist").append('<div class="player"><object type="application/x-shockwave-flash" data="http://grooveshark.com/songWidget.swf" width="100%" height="40"><param name="wmode" value="window" /><param name="allowScriptAccess" value="always" /><param name="flashvars" value="hostname=grooveshark.com&songID=' + currentSong.SongID + '&p=1" /></object></div>');
-            $(this).text("Mute");
+            if (currentSong != null) {
+                $("#playlist").append('<div class="player"><object type="application/x-shockwave-flash" data="http://grooveshark.com/songWidget.swf" width="100%" height="40"><param name="wmode" value="window" /><param name="allowScriptAccess" value="always" /><param name="flashvars" value="hostname=grooveshark.com&songID=' + currentSong.SongID + '&p=1" /></object></div>');
+            }
+            $muteIcon.removeClass("fa-play");
+            $muteIcon.addClass("fa-stop");
         }
     });
 
@@ -40,16 +54,16 @@ $(function () {
         $("#aboutModal").modal('show');
     });
 
-    //Add the enter key-listener to the search field
+    // Add the enter key-listener to the search field
     $("#search").keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
 
-            //Send out an API call to fetch the song data
+            // Send out an API call to fetch the song data
             $.ajax({
                 url: "/search/songs/" + encodeURIComponent($(this).val())
             }).then(function (data) {
-                //if the data is good
+                // if the data is good
                 if (data.length > 0) {
                     hub.server.tryAddSong(data[0]);
                 }
@@ -57,6 +71,8 @@ $(function () {
                     alert("No songs found");// TODO: Do this in a less ugly way
                 }
             });
+
+            $(this).val(""); // Clear the text box
         }
     });
 

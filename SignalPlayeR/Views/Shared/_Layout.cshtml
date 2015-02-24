@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -29,10 +30,10 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a id="skip-button" href="#">Next Song</a>
+                        <i id="skip-button" class="fa fa-step-forward"></i>
                     </li>
                     <li>
-                        <a id="mute-button" href="#">Mute</a>
+                        <i id="mute-button" class="fa fa-stop"></i>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Todo <b class="caret"></b></a>
