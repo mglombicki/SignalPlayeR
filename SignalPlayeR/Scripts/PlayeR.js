@@ -159,31 +159,10 @@ $(function () {
 
     $.connection.hub.logging = true;
     $.connection.hub.start().done(function () {
-        //TODO User registration
-        //$('#registerModal').modal({
-        //    keyboard: false,
-        //    backdrop: 'static'
-        //});
-        //$("#registerModal").keypress(function (event) {
-        //    if (event.which == 13) {
-        //        event.preventDefault();
-        //        var name = $('#register-field').val();
-        //        if (name) {
-        //            hub.server.registerUser(name);
-        //            $(this).modal('hide');
-        //        }
-        //    }
-        //});
-        //$('#register-button').click(function () {
-        //    var name = $('#register-field').val();
-        //    hub.server.registerUser(name);
-        //})
-
         $("#skip-button").click(function () {
             hub.server.nextSong();
         })
 
         hub.server.updateSonglist();
     });
-
 });
